@@ -79,5 +79,13 @@ SELECT follow_user('b8dcbf13-cb01-4a35-93d5-5a5f5a2f6c01', 'cc7ebda2-019c-4387-9
 SELECT * FROM get_activities_by_following_as_json(1, 10, 'b8dcbf13-cb01-4a35-93d5-5a5f5a2f6c01');
 
 
---Will returl all the activities within 4000 radius of the specified lat and lon 
+--Will retur all the activities within 4000 radius of the specified lat and lon 
 SELECT get_activities_by_distance_as_json(59.9343, 30.3351, 4000, 1, 10);
+
+--Will retur alice followees as a data table
+SELECT *
+FROM get_followees_by_object_id('b8dcbf13-cb01-4a35-93d5-5a5f5a2f6c01', 1, 2);
+
+--Will retur alice followees as JSON
+SELECT *
+FROM get_followees_by_object_id_as_json('b8dcbf13-cb01-4a35-93d5-5a5f5a2f6c01', 1, 2);

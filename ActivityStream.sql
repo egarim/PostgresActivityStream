@@ -293,5 +293,39 @@ $$ LANGUAGE plpgsql;
 
 ---
 
+CREATE OR REPLACE FUNCTION get_followees_by_object_id(
+  p_object_id UUID,
+  p_page_number INTEGER,
+  p_page_size INTEGER
+) RETURNS TABLE (
+  followee_id UUID,
+  followee_data JSONB
+) AS $$
+DECLARE
+  v_offset INTEGER;
+BEGIN
+  v_offset := (p_page_number - 1) * p_page_size;
 
+  RETURN QUERY
+  SELECT f.followee_id, o.object_data
+  FROM follow f
+  INNER JOIN objectstorage o ON f.followee_id = o.id
+  WHERE f.follower_id = p_object_id
+  ORDER BY o.created_at DESC
+  LIMIT p_page_size
+  OFFSET v_offset;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION get_followees_by_object_id_as_json(
+  p_object_id UUID,
+  p_page_number INTEGER,
+  p_page_size INTEGER
+) 
+RETURNS JSON AS $$
+BEGIN
+    RETURN (SELECT json_agg(followee_data) FROM get_followees_by_object_id(p_object_id, p_page_number, p_page_size));
+END;
+$$ LANGUAGE plpgsql;
 
