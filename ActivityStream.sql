@@ -181,14 +181,18 @@ CREATE OR REPLACE FUNCTION follow_user(
     p_followee_id UUID
 ) RETURNS VOID AS $$
 BEGIN
-    -- Try to insert a new row into the follow table
-    -- If the row already exists, do nothing
-    BEGIN
-        INSERT INTO follow (follower_id, followee_id)
-        VALUES (p_follower_id, p_followee_id);
-    EXCEPTION WHEN unique_violation THEN
+    -- Check if a row with the same follower_id and followee_id values already exists
+    IF EXISTS (
+        SELECT 1
+        FROM follow
+        WHERE follower_id = p_follower_id AND followee_id = p_followee_id
+    ) THEN
         RETURN;
-    END;
+    END IF;
+    
+    -- If the row does not exist, insert a new row into the follow table
+    INSERT INTO follow (follower_id, followee_id)
+    VALUES (p_follower_id, p_followee_id);
 END;
 $$ LANGUAGE plpgsql;
 
