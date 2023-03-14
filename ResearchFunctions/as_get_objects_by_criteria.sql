@@ -192,3 +192,106 @@ FROM as_get_recommendations(
     'tags', -- JSON field to match against
     3 -- maximum number of recommendations to return
 );
+
+
+---------------------------------------
+--reactions 
+
+CREATE TABLE reaction (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    activity_id UUID NOT NULL REFERENCES activity(id),
+    user_id UUID NOT NULL REFERENCES objectstorage(id),
+    type TEXT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX ON reaction(activity_id);
+CREATE INDEX ON reaction(user_id);
+
+CREATE OR REPLACE FUNCTION add_reaction_to_activity(
+    p_activity_id UUID,
+    p_user_id UUID,
+    p_type TEXT
+) RETURNS VOID AS $$
+BEGIN
+    INSERT INTO reaction (activity_id, user_id, type)
+    VALUES (p_activity_id, p_user_id, p_type);
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION remove_reaction_from_activity(
+    p_activity_id UUID,
+    p_user_id UUID,
+    p_type TEXT
+) RETURNS VOID AS $$
+BEGIN
+    DELETE FROM reaction
+    WHERE activity_id = p_activity_id
+    AND user_id = p_user_id
+    AND type = p_type;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_activity_reactions(
+    p_activity_id UUID
+) RETURNS TABLE (
+    id UUID,
+    user_id UUID,
+    type TEXT,
+    created_at TIMESTAMP WITH TIME ZONE
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT id, user_id, type, created_at
+    FROM reaction
+    WHERE activity_id = p_activity_id;
+END;
+$$ LANGUAGE plpgsql;
+
+ALTER TABLE activity
+ADD COLUMN reactions_count INTEGER DEFAULT 0,
+ADD COLUMN reactions JSONB DEFAULT '[]';
+
+CREATE OR REPLACE FUNCTION update_activity_reactions(
+    p_activity_id UUID
+) RETURNS VOID AS $$
+BEGIN
+    UPDATE activity
+    SET reactions_count = (
+        SELECT COUNT(*)
+        FROM reaction
+        WHERE activity_id = p_activity_id
+    ),
+    reactions = (
+        SELECT json_agg(json_build_object(
+            'id', id,
+            'user_id', user_id,
+            'type', type,
+            'created_at', created_at
+        ))
+        FROM reaction
+        WHERE activity_id = p_activity_id
+    )
+    WHERE id = p_activity_id;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER activity_reaction_trigger
+AFTER INSERT OR DELETE ON reaction
+FOR EACH ROW
+EXECUTE FUNCTION update_activity_reactions();
+
+-- reactions test 
+
+-- Define the activity ID, user ID, and reaction type
+DECLARE
+    activity_id UUID := 'some-activity-id';
+    user_id UUID := 'some-user-id';
+    reaction_type TEXT := 'like';
+BEGIN
+    -- Add the reaction to the activity
+    PERFORM add_reaction_to_activity(activity_id, user_id, reaction_type);
+
+    -- Update the reactions count and array for the activity
+    PERFORM update_activity_reactions(activity_id);
+END;
