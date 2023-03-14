@@ -388,3 +388,54 @@ BEGIN
             LIMIT ' || p_page_size || ' OFFSET ' || v_offset;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION as_get_objects_by_criteria_query_parameters(
+    p_object_type TEXT,
+    p_created_at TIMESTAMP WITH TIME ZONE,
+    p_updated_at TIMESTAMP WITH TIME ZONE,
+    p_object_data_where TEXT,
+    p_page_number INTEGER,
+    p_page_size INTEGER,
+    p_location_radius TEXT
+) RETURNS TEXT AS $$
+DECLARE
+    v_offset INTEGER := (p_page_number - 1) * p_page_size;
+    v_where_clause TEXT := '';
+    v_location_radius FLOAT;
+BEGIN
+    -- Construct the WHERE clause based on the function parameters
+    IF p_object_type IS NOT NULL THEN
+        v_where_clause := v_where_clause || 'object_type = $1 AND ';
+    END IF;
+
+    IF p_created_at IS NOT NULL THEN
+        v_where_clause := v_where_clause || 'created_at >= $2 AND ';
+    END IF;
+
+    IF p_updated_at IS NOT NULL THEN
+        v_where_clause := v_where_clause || 'updated_at >= $3 AND ';
+    END IF;
+
+    IF p_object_data_where IS NOT NULL THEN
+        v_where_clause := v_where_clause || 'object_data ->> $4 AND ';
+    END IF;
+
+    -- Parse the location radius parameter
+    IF p_location_radius IS NOT NULL THEN
+        v_location_radius := CAST(split_part(p_location_radius, ',', 3) AS FLOAT);
+    END IF;
+
+    -- Add the location filter to the WHERE clause
+    IF p_location_radius IS NOT NULL THEN
+        v_where_clause := v_where_clause || 'ST_DWithin(location, ST_MakePoint($5, $6)::geography, $7) AND ';
+    END IF;
+
+    -- Remove the trailing 'AND' from the WHERE clause
+    v_where_clause := LEFT(v_where_clause, LENGTH(v_where_clause) - 5);
+
+    RETURN 'SELECT id, latitude, longitude, location, object_type, object_data, created_at, updated_at
+            FROM as_objectstorage WHERE ' || v_where_clause || '
+            ORDER BY created_at DESC, id DESC
+            LIMIT $8 OFFSET $9';
+END;
+$$ LANGUAGE plpgsql;

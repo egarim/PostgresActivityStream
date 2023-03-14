@@ -212,4 +212,15 @@ SELECT * FROM as_get_activities_by_following_as_json(1, 2, 'b8dcbf13-cb01-4a35-9
 SELECT as_get_activities_by_distance_as_json(59.9343, 30.3351, 5000, 1, 10);
 
 --Create query
-SELECT * FROM as_get_objects_by_criteria('user', '2022-01-01', NULL, '"name" = "Bob"', 1, 10, '59.942800,30.307100,1000');
+SELECT * FROM as_get_objects_by_criteria_query('user', '2022-01-01', NULL, '"name" = "Bob"', 1, 10, '59.942800,30.307100,1000');
+
+
+SELECT * FROM as_get_objects_by_criteria_query_parameters(
+    'user', 
+    '2022-01-01', 
+    NULL, 
+    '{"name": "Bob"}', 
+    1, 
+    10, 
+    '59.942800,30.307100,1000'
+);
