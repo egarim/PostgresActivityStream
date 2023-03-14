@@ -439,3 +439,39 @@ BEGIN
             LIMIT $8 OFFSET $9';
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION as_get_objects_by_criteria_as_table(  p_object_type TEXT,
+											p_created_at TIMESTAMP WITH TIME ZONE,
+											p_updated_at TIMESTAMP WITH TIME ZONE,
+											p_object_data_where TEXT,
+											p_page_number INTEGER,
+											p_page_size INTEGER,
+											p_location_radius TEXT)
+RETURNS TABLE  (id uuid ,
+    latitude numeric(9,6),
+    longitude numeric(9,6),
+    location geometry(Point,4326),
+    object_type text ,
+    object_data jsonb,
+    created_at timestamp with time zone,
+    updated_at timestamp with time zone) AS
+$$
+BEGIN
+   RETURN QUERY EXECUTE as_get_objects_by_criteria_query(p_object_type,p_created_at,p_updated_at, p_object_data_where, p_page_number,p_page_size,p_location_radius);
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION as_get_objects_by_criteria_as_json(  p_object_type TEXT,
+											p_created_at TIMESTAMP WITH TIME ZONE,
+											p_updated_at TIMESTAMP WITH TIME ZONE,
+											p_object_data_where TEXT,
+											p_page_number INTEGER,
+											p_page_size INTEGER,
+											p_location_radius TEXT)
+RETURNS JSON AS $$
+BEGIN
+   RETURN SELECT json_agg(object_data) FROM as_get_objects_by_criteria_as_table(p_object_type,p_created_at,p_updated_at, p_object_data_where, p_page_number,p_page_size,p_location_radius);
+END;
+$$
+LANGUAGE plpgsql;
