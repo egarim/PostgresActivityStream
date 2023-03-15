@@ -471,7 +471,7 @@ CREATE OR REPLACE FUNCTION as_get_objects_by_criteria_as_json(  p_object_type TE
 											p_location_radius TEXT)
 RETURNS JSON AS $$
 BEGIN
-   RETURN SELECT json_agg(object_data) FROM as_get_objects_by_criteria_as_table(p_object_type,p_created_at,p_updated_at, p_object_data_where, p_page_number,p_page_size,p_location_radius);
+   RETURN (SELECT json_agg(object_data) FROM as_get_objects_by_criteria_as_table(p_object_type,p_created_at,p_updated_at, p_object_data_where, p_page_number,p_page_size,p_location_radius));
 END;
 $$
 LANGUAGE plpgsql;
