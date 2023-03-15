@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Brevitas.AppFramework
+namespace Ultra.ActivityStream
 {
     public class Account : StreamObject, ISlug
     {
