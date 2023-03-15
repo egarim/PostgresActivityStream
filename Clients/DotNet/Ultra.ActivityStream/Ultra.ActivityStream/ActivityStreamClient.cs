@@ -55,11 +55,35 @@ namespace Ultra.ActivityStream
             var Result = await command.ExecuteScalarAsync();
             _dbContext.Database.CloseConnection();
         }
+        public async Task UnFollowObject(Guid Follower, Guid Followee)
+        {
+
+            using var command = _dbContext.Database.GetDbConnection().CreateCommand() as NpgsqlCommand;
+
+            string query = "SELECT as_unfollow_object(@follower, @followee)";
+            command.CommandText = query;
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@follower", NpgsqlTypes.NpgsqlDbType.Uuid, Follower);
+            command.Parameters.AddWithValue("@followee", NpgsqlTypes.NpgsqlDbType.Uuid, Followee);
+            await _dbContext.Database.OpenConnectionAsync();
+            var Result = await command.ExecuteScalarAsync();
+            _dbContext.Database.CloseConnection();
+        }
         public async Task ObjectStorageUpsert(object Instace)
         {
             IStreamObject streamObject = (IStreamObject)Instace;
-            using var command = _dbContext.Database.GetDbConnection().CreateCommand() as NpgsqlCommand;
+           
 
+            var command = ObjectStorageUpsertCore(Instace, streamObject);
+
+            await _dbContext.Database.OpenConnectionAsync();
+            var Result = await command.ExecuteScalarAsync();
+            _dbContext.Database.CloseConnection();
+        }
+
+        protected NpgsqlCommand ObjectStorageUpsertCore(object Instace, IStreamObject streamObject)
+        {
+            NpgsqlCommand? command = GetSqlCommand();
             string query = "SELECT as_upsert_objectstorage(@object_id, @latitude, @longitude, @object_type, @object_data)";
             command.CommandText = query;
             command.CommandType = CommandType.Text;
@@ -70,16 +94,7 @@ namespace Ultra.ActivityStream
             var Data = JsonSerializer.Serialize(Instace);
             Debug.WriteLine(Data);
             command.Parameters.AddWithValue("@object_data", NpgsqlTypes.NpgsqlDbType.Jsonb, Data);
-
-
-
-
-
-
-
-            await _dbContext.Database.OpenConnectionAsync();
-            var Result = await command.ExecuteScalarAsync();
-            _dbContext.Database.CloseConnection();
+            return command;
         }
         #region GetObjectsByCriteriaAsObjects overloads
 
@@ -162,6 +177,38 @@ namespace Ultra.ActivityStream
             return Result;
         }
 
+
+
+        public async Task ActivityUpsert(string verb, Guid actorId, Guid objectId, Guid? targetId, double latitude, double longitude)
+        {
+            
+
+            var command=ActivityUpsertCore(verb, actorId, objectId, targetId, latitude, longitude);
+
+            await _dbContext.Database.OpenConnectionAsync();
+            var Result = await command.ExecuteNonQueryAsync();
+            _dbContext.Database.CloseConnection();
+        }
+
+        protected NpgsqlCommand ActivityUpsertCore(string verb, Guid actorId, Guid objectId, Guid? targetId, double latitude, double longitude)
+        {
+            NpgsqlCommand? command = GetSqlCommand();
+            string query = "SELECT as_upsert_activity(gen_random_uuid(), @verb, @actorId, @objectId, @targetId, @latitude, @longitude);";
+            command.CommandText = query;
+            command.CommandType = CommandType.Text;
+            command.Parameters.AddWithValue("@verb", NpgsqlTypes.NpgsqlDbType.Text, verb);
+            command.Parameters.AddWithValue("@actorId", NpgsqlTypes.NpgsqlDbType.Uuid, actorId);
+            command.Parameters.AddWithValue("@objectId", NpgsqlTypes.NpgsqlDbType.Uuid, objectId);
+            command.Parameters.AddWithValue("@targetId", NpgsqlTypes.NpgsqlDbType.Uuid, targetId.HasValue ? (object)targetId.Value : DBNull.Value);
+            command.Parameters.AddWithValue("@latitude", NpgsqlTypes.NpgsqlDbType.Numeric, latitude);
+            command.Parameters.AddWithValue("@longitude", NpgsqlTypes.NpgsqlDbType.Numeric, longitude);
+            return command;
+        }
+
+        private NpgsqlCommand? GetSqlCommand()
+        {
+            return _dbContext.Database.GetDbConnection().CreateCommand() as NpgsqlCommand;
+        }
 
         public async Task SimpleTest()
         {

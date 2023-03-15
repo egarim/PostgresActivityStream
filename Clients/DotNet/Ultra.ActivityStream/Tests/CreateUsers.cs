@@ -34,6 +34,8 @@ namespace Tests
 
             var Objects2 = await this.activityStreamClient.GetObjectsByCriteriaAsObjects<List<Account>>("user", null, null, null, 1, 10, null, null, null);
 
+            await this.activityStreamClient.ActivityUpsert("like", SpbAccounts.FirstOrDefault().Id, SpbAccounts.FirstOrDefault().Id,null, 59.942800, 30.307100);
+
             Assert.Pass();
         }
     }
