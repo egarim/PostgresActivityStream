@@ -1,3 +1,5 @@
+using Brevitas.AppFramework;
+
 namespace Tests
 {
     public class CreateUsers : TestBase
@@ -14,9 +16,16 @@ namespace Tests
         }
 
         [Test]
-        public void Test1()
+        public async Task CreateUsersTest()
         {
-            Assert.Pass();
+            var SpbAccounts=AccountCreator.CreateAccountsNearStPetersburg();
+            foreach (Account account in SpbAccounts)
+            {
+                await this.activityStreamClient.ObjectStorageUpsert(account);
+            }
+
+           await this.activityStreamClient.FollowObject(SpbAccounts.FirstOrDefault().Id, SpbAccounts.LastOrDefault().Id);
+           Assert.Pass();
         }
     }
 }

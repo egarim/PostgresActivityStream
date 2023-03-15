@@ -180,7 +180,7 @@ CREATE TABLE as_follow (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE OR REPLACE FUNCTION as_follow_user(
+CREATE OR REPLACE FUNCTION as_follow_object(
     p_follower_id UUID,
     p_followee_id UUID
 ) RETURNS VOID AS $$
@@ -200,7 +200,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION as_unfollow_user(
+CREATE OR REPLACE FUNCTION as_unfollow_object(
     p_follower_id UUID,
     p_followee_id UUID
 ) RETURNS VOID AS $$

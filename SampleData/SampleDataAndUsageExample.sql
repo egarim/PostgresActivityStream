@@ -179,15 +179,15 @@ SELECT as_upsert_activity(
 -- Follow data
 
 -- Follow Eve and Alice to themselves
-SELECT as_follow_user('8d7685d5-5b1f-4a7a-835e-b89e7d3a3b54', '8d7685d5-5b1f-4a7a-835e-b89e7d3a3b54');
-SELECT as_follow_user('b8dcbf13-cb01-4a35-93d5-5a5f5a2f6c01', 'b8dcbf13-cb01-4a35-93d5-5a5f5a2f6c01');
+SELECT as_follow_object('8d7685d5-5b1f-4a7a-835e-b89e7d3a3b54', '8d7685d5-5b1f-4a7a-835e-b89e7d3a3b54');
+SELECT as_follow_object('b8dcbf13-cb01-4a35-93d5-5a5f5a2f6c01', 'b8dcbf13-cb01-4a35-93d5-5a5f5a2f6c01');
 -- Follow Eve and Alice to Bob, Charlie, and Dave
-SELECT as_follow_user('8d7685d5-5b1f-4a7a-835e-b89e7d3a3b54', 'cc7ebda2-019c-4387-925c-352f7e1f0b10');
-SELECT as_follow_user('b8dcbf13-cb01-4a35-93d5-5a5f5a2f6c01', 'cc7ebda2-019c-4387-925c-352f7e1f0b10');
-SELECT as_follow_user('8d7685d5-5b1f-4a7a-835e-b89e7d3a3b54', '99875f15-49ee-4e6d-b356-cbab4f4e4a4c');
-SELECT as_follow_user('b8dcbf13-cb01-4a35-93d5-5a5f5a2f6c01', '99875f15-49ee-4e6d-b356-cbab4f4e4a4c');
-SELECT as_follow_user('8d7685d5-5b1f-4a7a-835e-b89e7d3a3b54', '34f6c0a5-5d5e-463f-a2cf-11b7529a92a1');
-SELECT as_follow_user('b8dcbf13-cb01-4a35-93d5-5a5f5a2f6c01', '34f6c0a5-5d5e-463f-a2cf-11b7529a92a1');
+SELECT as_follow_object('8d7685d5-5b1f-4a7a-835e-b89e7d3a3b54', 'cc7ebda2-019c-4387-925c-352f7e1f0b10');
+SELECT as_follow_object('b8dcbf13-cb01-4a35-93d5-5a5f5a2f6c01', 'cc7ebda2-019c-4387-925c-352f7e1f0b10');
+SELECT as_follow_object('8d7685d5-5b1f-4a7a-835e-b89e7d3a3b54', '99875f15-49ee-4e6d-b356-cbab4f4e4a4c');
+SELECT as_follow_object('b8dcbf13-cb01-4a35-93d5-5a5f5a2f6c01', '99875f15-49ee-4e6d-b356-cbab4f4e4a4c');
+SELECT as_follow_object('8d7685d5-5b1f-4a7a-835e-b89e7d3a3b54', '34f6c0a5-5d5e-463f-a2cf-11b7529a92a1');
+SELECT as_follow_object('b8dcbf13-cb01-4a35-93d5-5a5f5a2f6c01', '34f6c0a5-5d5e-463f-a2cf-11b7529a92a1');
 -- Follow data
 
 
