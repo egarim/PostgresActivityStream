@@ -13,21 +13,6 @@ namespace Tests.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class SimpleController : ControllerBase
-    {
-        private readonly ILogger<SimpleController> _logger;
-        public SimpleController(ILogger<SimpleController> logger)
-        {
-            _logger = logger;
-        }
-        [HttpGet()]
-        public async Task<IActionResult> Get()
-        {
-            return Ok();
-        }
-    }
-    [ApiController]
-    [Route("[controller]")]
     public class FilesController : ControllerBase
     {
         private readonly ILogger<FilesController> _logger;
