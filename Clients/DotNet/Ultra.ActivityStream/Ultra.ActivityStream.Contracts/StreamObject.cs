@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 
-namespace Ultra.ActivityStream
+namespace Ultra.ActivityStream.Contracts
 {
-    public class Post: StreamObject
+    public class Post: Ultra.ActivityStream.Contracts.StreamObject
     {
         
         public Post()

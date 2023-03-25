@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Ultra.ActivityStream.Contracts\Ultra.ActivityStream.Contracts.csproj" />
     <ProjectReference Include="..\Ultra.ActivityStream\Ultra.ActivityStream.csproj" />
   </ItemGroup>
 

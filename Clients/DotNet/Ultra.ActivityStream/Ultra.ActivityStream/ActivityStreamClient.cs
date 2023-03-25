@@ -43,7 +43,7 @@ namespace Ultra.ActivityStream
         {
             await FollowObject(Guid.Parse(Follower), Guid.Parse(Followee));
         }
-        public async Task FollowObject(IStreamObject Follower, IStreamObject Followee)
+        public async Task FollowObject(Ultra.ActivityStream.Contracts.IStreamObject Follower, Ultra.ActivityStream.Contracts.IStreamObject Followee)
         {
             await FollowObject(Follower.Id, Followee.Id);
         }
@@ -65,7 +65,7 @@ namespace Ultra.ActivityStream
         #endregion
         #region UnfollowObject Overloads
 
-        public async Task UnFollowObject(IStreamObject Follower, IStreamObject Followee)
+        public async Task UnFollowObject(Ultra.ActivityStream.Contracts.IStreamObject Follower, Ultra.ActivityStream.Contracts.IStreamObject Followee)
         {
             await UnFollowObject(Follower.Id, Followee.Id);
         }
@@ -107,7 +107,7 @@ namespace Ultra.ActivityStream
         protected NpgsqlCommand ObjectStorageUpsertCore(object Instace)
         {
             //TODO check if streamObject is IStreamObject if not manually throw a readable exception
-            IStreamObject streamObject = (IStreamObject)Instace;
+            Ultra.ActivityStream.Contracts.IStreamObject streamObject = (Ultra.ActivityStream.Contracts.IStreamObject)Instace;
             NpgsqlCommand? command = GetSqlCommand();
             string query = "SELECT as_upsert_objectstorage(@object_id, @latitude, @longitude, @object_type, @object_data)";
             command.CommandText = query;

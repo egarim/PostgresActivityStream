@@ -29,20 +29,20 @@ namespace Tests
         {
             const int RadiusDistanceInMeters = 10000;
             var SanSalvadorAccounts = AccountCreator.CreateAccountsNearSanSalvador();
-            foreach (Account account in SanSalvadorAccounts)
+            foreach (Ultra.ActivityStream.Contracts.Account account in SanSalvadorAccounts)
             {
                 await this.activityStreamClient.ObjectStorageUpsert(account);
             }
             var BuenosAiresArgentinaAccounts = AccountCreator.CreateAccountsNearBuenosAires();
-            foreach (Account account in BuenosAiresArgentinaAccounts)
+            foreach (Ultra.ActivityStream.Contracts.Account account in BuenosAiresArgentinaAccounts)
             {
                 await this.activityStreamClient.ObjectStorageUpsert(account);
             }
-            var Page1 = await this.activityStreamClient.GetObjectsByCriteriaAsObjects<List<Account>>("user", null, null, null, 1, 5, CityCoordinates.SanSalvadorLocation.Latitude, CityCoordinates.SanSalvadorLocation.Longitude, RadiusDistanceInMeters);
+            var Page1 = await this.activityStreamClient.GetObjectsByCriteriaAsObjects<List<Ultra.ActivityStream.Contracts.Account>>("user", null, null, null, 1, 5, CityCoordinates.SanSalvadorLocation.Latitude, CityCoordinates.SanSalvadorLocation.Longitude, RadiusDistanceInMeters);
             
             
             
-            foreach (Account account in Page1)
+            foreach (Ultra.ActivityStream.Contracts.Account account in Page1)
             {
                 Assert.IsTrue(GeoHelper.IsWithinRadius(CityCoordinates.SanSalvadorLocation.Latitude, CityCoordinates.SanSalvadorLocation.Longitude, account.Latitude, account.Longitude,10000));
 
@@ -56,14 +56,14 @@ namespace Tests
         public async Task CreateUsersTest()
         {
             var SpbAccounts = AccountCreator.CreateAccountsNearStPetersburg();
-            foreach (Account account in SpbAccounts)
+            foreach (Ultra.ActivityStream.Contracts.Account account in SpbAccounts)
             {
                 await this.activityStreamClient.ObjectStorageUpsert(account);
             }
 
             var Objects = await this.activityStreamClient.GetObjectsByCriteriaAsJson("user", null, null, null, 1, 10, null, null, null);
 
-            var AccountsFromJson = JsonConvert.DeserializeObject<List<Account>>(Objects);
+            var AccountsFromJson = JsonConvert.DeserializeObject<List<Ultra.ActivityStream.Contracts.Account>>(Objects);
 
             Assert.AreEqual(5, AccountsFromJson.Count());
         }
@@ -75,38 +75,38 @@ namespace Tests
         public async Task CreateUsers30UsersAndLoadThemByPages()
         {
             var SpbAccounts = AccountCreator.CreateAccountsNearStPetersburg();
-            foreach (Account account in SpbAccounts)
+            foreach (Ultra.ActivityStream.Contracts.Account account in SpbAccounts)
             {
                 await this.activityStreamClient.ObjectStorageUpsert(account);
             }
             var GlendaleAccounts = AccountCreator.CreateAccountsNearGlendale();
-            foreach (Account account in GlendaleAccounts)
+            foreach (Ultra.ActivityStream.Contracts.Account account in GlendaleAccounts)
             {
                 await this.activityStreamClient.ObjectStorageUpsert(account);
             }
             var SantoDomingoAccounts = AccountCreator.CreateAccountsNearSantoDomingo();
-            foreach (Account account in SantoDomingoAccounts)
+            foreach (Ultra.ActivityStream.Contracts.Account account in SantoDomingoAccounts)
             {
                 await this.activityStreamClient.ObjectStorageUpsert(account);
             }
             var SanSalvadorAccounts = AccountCreator.CreateAccountsNearSanSalvador();
-            foreach (Account account in SanSalvadorAccounts)
+            foreach (Ultra.ActivityStream.Contracts.Account account in SanSalvadorAccounts)
             {
                 await this.activityStreamClient.ObjectStorageUpsert(account);
             }
             var SantiagoDeChileAccounts = AccountCreator.CreateAccountsNearSantiago();
-            foreach (Account account in SantiagoDeChileAccounts)
+            foreach (Ultra.ActivityStream.Contracts.Account account in SantiagoDeChileAccounts)
             {
                 await this.activityStreamClient.ObjectStorageUpsert(account);
             }
             var BuenosAiresArgentinaAccounts = AccountCreator.CreateAccountsNearBuenosAires();
-            foreach (Account account in BuenosAiresArgentinaAccounts)
+            foreach (Ultra.ActivityStream.Contracts.Account account in BuenosAiresArgentinaAccounts)
             {
                 await this.activityStreamClient.ObjectStorageUpsert(account);
             }
-            var Page1 = await this.activityStreamClient.GetObjectsByCriteriaAsObjects<List<Account>>("user", null, null, null, 1, 5, null, null, null);
-            var Page2 = await this.activityStreamClient.GetObjectsByCriteriaAsObjects<List<Account>>("user", null, null, null, 2, 5, null, null, null);
-            var Page3 = await this.activityStreamClient.GetObjectsByCriteriaAsObjects<List<Account>>("user", null, null, null, 3, 5, null, null, null);
+            var Page1 = await this.activityStreamClient.GetObjectsByCriteriaAsObjects<List<Ultra.ActivityStream.Contracts.Account>>("user", null, null, null, 1, 5, null, null, null);
+            var Page2 = await this.activityStreamClient.GetObjectsByCriteriaAsObjects<List<Ultra.ActivityStream.Contracts.Account>>("user", null, null, null, 2, 5, null, null, null);
+            var Page3 = await this.activityStreamClient.GetObjectsByCriteriaAsObjects<List<Ultra.ActivityStream.Contracts.Account>>("user", null, null, null, 3, 5, null, null, null);
 
             Assert.AreEqual(5, Page1.Count());
             Assert.AreEqual(5, Page2.Count());

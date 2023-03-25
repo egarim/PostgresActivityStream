@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Ultra.ActivityStream
+namespace Ultra.ActivityStream.Contracts
 {
     public interface ISlug
     {
