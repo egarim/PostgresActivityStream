@@ -55,7 +55,7 @@ namespace Ultra.ActivityStream.Client
                 //GetResponse.EnsureSuccessStatusCode(); 
                 try
                 {
-                    var response = await _httpClient.PostAsync("files/upload", content);
+                    var response = await _httpClient.PostAsync("ActivityStream/upload", content);
                     //var response = await _httpClient.PostAsync("activityStream/upload", content);
                     response.EnsureSuccessStatusCode();
                 }

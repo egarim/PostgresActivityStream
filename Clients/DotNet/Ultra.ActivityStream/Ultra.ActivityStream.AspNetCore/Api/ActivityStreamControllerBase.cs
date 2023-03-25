@@ -19,7 +19,7 @@ namespace Ultra.ActivityStream.AspNetCore.Api
             _logger = logger;
         }
 
-        [HttpPost("upload")]
+        [HttpPost("upload1")]
         public virtual async Task<IActionResult> CreateActivity(
             [FromForm(Name = "Actor")] StreamObject actor,
             [FromForm(Name = "Object")] StreamObject obj,
