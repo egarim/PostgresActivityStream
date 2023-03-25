@@ -32,6 +32,12 @@ namespace Tests.Controllers
             return  Ok();
             //return base.CreateActivity(actor, obj, target, latitude, longitude);
         }
+        [HttpPost("FollowObjectFromIdAsync")]
+        public virtual async Task<IActionResult> FollowObjectFromIdAsync([FromForm(Name = "Follower")] string Follower, [FromForm(Name = "Followee")] Guid Followee)
+        {
+            return Ok();
+            //return base.CreateActivity(actor, obj, target, latitude, longitude);
+        }
 
     }
 }

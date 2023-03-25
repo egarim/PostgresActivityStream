@@ -3,7 +3,7 @@
 namespace Ultra.ActivityStream.Contracts
 {
     public interface IActivityStreamClient :
-        IFollowFromStrings, IFollowFromId, IFollowFromStreamObjects,
+        IFollowObjectFromStrings, IFollowObjectFromIds, IFollowObjectFromStreamObjects,
         IUnfollowFromStrings, IUnfollowFromIds, IUnfollowFromStreamObjects,
         IUpsertObjectFromStreamObject,
         IUpsertActivityFromIds

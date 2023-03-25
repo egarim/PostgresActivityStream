@@ -1,7 +1,7 @@
 ﻿
 namespace Ultra.ActivityStream.Contracts.Operations
 {
-    public interface IFollowFromStreamObjects
+    public interface IFollowObjectFromStreamObjects
     {
 
         Task FollowObject(IStreamObject Follower, IStreamObject Followee);

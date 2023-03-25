@@ -2,6 +2,6 @@
 {
     public interface IUnfollowFromIds
     {
-        Task UnFollowObject(Guid Follower, Guid Followee);
+        Task UnfollowFromIdsAsync(Guid Follower, Guid Followee);
     }
 }

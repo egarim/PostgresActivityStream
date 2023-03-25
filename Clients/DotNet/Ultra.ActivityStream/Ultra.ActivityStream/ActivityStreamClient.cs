@@ -42,13 +42,13 @@ namespace Ultra.ActivityStream
 
         public async Task FollowObject(string Follower, string Followee)
         {
-            await FollowObject(Guid.Parse(Follower), Guid.Parse(Followee));
+            await FollowObjectFromIdsAsync(Guid.Parse(Follower), Guid.Parse(Followee));
         }
         public async Task FollowObject(Ultra.ActivityStream.Contracts.IStreamObject Follower, Ultra.ActivityStream.Contracts.IStreamObject Followee)
         {
-            await FollowObject(Follower.Id, Followee.Id);
+            await FollowObjectFromIdsAsync(Follower.Id, Followee.Id);
         }
-        public async Task FollowObject(Guid Follower, Guid Followee)
+        public async Task FollowObjectFromIdsAsync(Guid Follower, Guid Followee)
         {
 
             using var command = _dbContext.Database.GetDbConnection().CreateCommand() as NpgsqlCommand;
@@ -68,13 +68,13 @@ namespace Ultra.ActivityStream
 
         public async Task UnFollowObject(Ultra.ActivityStream.Contracts.IStreamObject Follower, Ultra.ActivityStream.Contracts.IStreamObject Followee)
         {
-            await UnFollowObject(Follower.Id, Followee.Id);
+            await UnfollowFromIdsAsync(Follower.Id, Followee.Id);
         }
         public async Task UnFollowObject(string Follower, string Followee)
         {
-            await UnFollowObject(Guid.Parse(Follower), Guid.Parse(Followee));
+            await UnfollowFromIdsAsync(Guid.Parse(Follower), Guid.Parse(Followee));
         }
-        public async Task UnFollowObject(Guid Follower, Guid Followee)
+        public async Task UnfollowFromIdsAsync(Guid Follower, Guid Followee)
         {
 
             using var command = _dbContext.Database.GetDbConnection().CreateCommand() as NpgsqlCommand;

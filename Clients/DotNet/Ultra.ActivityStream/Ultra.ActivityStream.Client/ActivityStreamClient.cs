@@ -2,10 +2,11 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Ultra.ActivityStream.Contracts;
+using Ultra.ActivityStream.Contracts.Operations;
 
 namespace Ultra.ActivityStream.Client
 {
-    public class ActivityStreamClient
+    public class ActivityStreamClient: IFollowObjectFromIds,IUnfollowFromIds
     {
         private readonly HttpClient _httpClient;
 
@@ -94,6 +95,48 @@ namespace Ultra.ActivityStream.Client
 
 
 
+            }
+        }
+
+        public async Task FollowObjectFromIdsAsync(Guid Follower, Guid Followee)
+        {
+            using (var content = new MultipartFormDataContent())
+            {
+                // Add the actor, obj, target, latitude, and longitude as form data
+                content.Add(new StringContent(Follower.ToString()), nameof(Follower));
+                content.Add(new StringContent(Followee.ToString()), nameof(Followee));
+
+                try
+                {
+                    var response = await _httpClient.PostAsync("ActivityStream/FollowObjectFromIdsAsync", content);
+                    response.EnsureSuccessStatusCode();
+                }
+                catch (Exception ex)
+                {
+                    var message = ex.Message;
+                    throw;
+                }
+            }
+        }
+
+        public async Task UnfollowFromIdsAsync(Guid Follower, Guid Followee)
+        {
+            using (var content = new MultipartFormDataContent())
+            {
+                // Add the actor, obj, target, latitude, and longitude as form data
+                content.Add(new StringContent(Follower.ToString()), nameof(Follower));
+                content.Add(new StringContent(Followee.ToString()), nameof(Followee));
+
+                try
+                {
+                    var response = await _httpClient.PostAsync("ActivityStream/UnfollowFromIdsAsync", content);
+                    response.EnsureSuccessStatusCode();
+                }
+                catch (Exception ex)
+                {
+                    var message = ex.Message;
+                    throw;
+                }
             }
         }
     }

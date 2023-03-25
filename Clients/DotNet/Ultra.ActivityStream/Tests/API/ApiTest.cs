@@ -42,8 +42,11 @@ namespace Tests.API
             files.Add(GenerateRandomStream(200));
             files.Add(GenerateRandomStream(300));
 
-            await activityStreamClient.CreateActivity(new StreamObject(),
-                new StreamObject(), new StreamObject(), 0, 0, files);
+            //await activityStreamClient.CreateActivity(new StreamObject(),
+            //    new StreamObject(), new StreamObject(), 0, 0, files);
+
+            await activityStreamClient.FollowObjectFromIdsAsync(Guid.NewGuid(),Guid.NewGuid());
+            await activityStreamClient.UnfollowFromIdsAsync(Guid.NewGuid(), Guid.NewGuid());
         }
     }
 }

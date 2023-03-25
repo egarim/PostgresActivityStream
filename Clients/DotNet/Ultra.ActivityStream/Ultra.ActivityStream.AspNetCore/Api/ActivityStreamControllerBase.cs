@@ -62,6 +62,16 @@ namespace Ultra.ActivityStream.AspNetCore.Api
             return Ok();
             //return base.CreateActivity(actor, obj, target, latitude, longitude);
         }
+        public virtual async Task<IActionResult> FollowObjectFromIdsAsync([FromForm(Name = "Follower")] string Follower, [FromForm(Name = "Followee")] Guid Followee)
+        {
+            return Ok();
+            //return base.CreateActivity(actor, obj, target, latitude, longitude);
+        }
+        public virtual async Task<IActionResult> UnfollowFromIdsAsync([FromForm(Name = "Follower")] string Follower, [FromForm(Name = "Followee")] Guid Followee)
+        {
+            return Ok();
+            //return base.CreateActivity(actor, obj, target, latitude, longitude);
+        }
     }
 
 }
