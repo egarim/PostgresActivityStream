@@ -36,11 +36,17 @@ namespace Ultra.ActivityStream
             var Result = await command.ExecuteNonQueryAsync();
             _dbContext.Database.CloseConnection();
         }
+
+        #region FollowObject Overloads
+
         public async Task FollowObject(string Follower, string Followee)
         {
             await FollowObject(Guid.Parse(Follower), Guid.Parse(Followee));
         }
-
+        public async Task FollowObject(IStreamObject Follower, IStreamObject Followee)
+        {
+            await FollowObject(Follower.Id, Followee.Id);
+        }
         public async Task FollowObject(Guid Follower, Guid Followee)
         {
 
@@ -54,6 +60,18 @@ namespace Ultra.ActivityStream
             await _dbContext.Database.OpenConnectionAsync();
             var Result = await command.ExecuteScalarAsync();
             _dbContext.Database.CloseConnection();
+        }
+
+        #endregion
+        #region UnfollowObject Overloads
+
+        public async Task UnFollowObject(IStreamObject Follower, IStreamObject Followee)
+        {
+            await UnFollowObject(Follower.Id, Followee.Id);
+        }
+        public async Task UnFollowObject(string Follower, string Followee)
+        {
+            await UnFollowObject(Guid.Parse(Follower), Guid.Parse(Followee));
         }
         public async Task UnFollowObject(Guid Follower, Guid Followee)
         {
@@ -69,20 +87,27 @@ namespace Ultra.ActivityStream
             var Result = await command.ExecuteScalarAsync();
             _dbContext.Database.CloseConnection();
         }
+
+        #endregion
+
+        #region ObjectStorageUpsert Overloads
+
         public async Task ObjectStorageUpsert(object Instace)
         {
-            IStreamObject streamObject = (IStreamObject)Instace;
-           
 
-            var command = ObjectStorageUpsertCore(Instace, streamObject);
+
+
+            var command = ObjectStorageUpsertCore(Instace);
 
             await _dbContext.Database.OpenConnectionAsync();
             var Result = await command.ExecuteScalarAsync();
             _dbContext.Database.CloseConnection();
         }
 
-        protected NpgsqlCommand ObjectStorageUpsertCore(object Instace, IStreamObject streamObject)
+        protected NpgsqlCommand ObjectStorageUpsertCore(object Instace)
         {
+            //TODO check if streamObject is IStreamObject if not manually throw a readable exception
+            IStreamObject streamObject = (IStreamObject)Instace;
             NpgsqlCommand? command = GetSqlCommand();
             string query = "SELECT as_upsert_objectstorage(@object_id, @latitude, @longitude, @object_type, @object_data)";
             command.CommandText = query;
@@ -96,6 +121,9 @@ namespace Ultra.ActivityStream
             command.Parameters.AddWithValue("@object_data", NpgsqlTypes.NpgsqlDbType.Jsonb, Data);
             return command;
         }
+
+        #endregion
+
         #region GetObjectsByCriteriaAsObjects overloads
 
         public async Task<T> GetObjectsByCriteriaAsObjects<T>(string ObjectType, int PageNumber, int PageSize)
@@ -133,7 +161,10 @@ namespace Ultra.ActivityStream
         public async Task<T> GetObjectsByCriteriaAsObjects<T>(string ObjectType, DateTime? CreatedAt, DateTime? UpdatedAt, string? ObjectDataWhere, int PageNumber, int PageSize, double? Latitud, double? Longitud, int? RadiusInMeters)
         {
             var ObjectsJson = await this.GetObjectsByCriteriaAsJson(ObjectType, CreatedAt, UpdatedAt, ObjectDataWhere, PageNumber, PageSize, Latitud, Longitud, RadiusInMeters);
-
+            if (ObjectsJson == null)
+            {
+                return default(T);
+            }
             var Objects = JsonSerializer.Deserialize<T>(ObjectsJson);
             return Objects;
 
@@ -178,12 +209,13 @@ namespace Ultra.ActivityStream
         }
 
 
+        #region ActivityUpsert Overloads
 
         public async Task ActivityUpsert(string verb, Guid actorId, Guid objectId, Guid? targetId, double latitude, double longitude)
         {
-            
 
-            var command=ActivityUpsertCore(verb, actorId, objectId, targetId, latitude, longitude);
+
+            var command = ActivityUpsertCore(verb, actorId, objectId, targetId, latitude, longitude);
 
             await _dbContext.Database.OpenConnectionAsync();
             var Result = await command.ExecuteNonQueryAsync();
@@ -203,6 +235,27 @@ namespace Ultra.ActivityStream
             command.Parameters.AddWithValue("@latitude", NpgsqlTypes.NpgsqlDbType.Numeric, latitude);
             command.Parameters.AddWithValue("@longitude", NpgsqlTypes.NpgsqlDbType.Numeric, longitude);
             return command;
+        }
+
+        #endregion
+
+
+        public async Task<string> get_activities_by_distance_as_json(double Latitud, double Longitud, int RadiusInMeters, int PageNumber, int PageSize)
+        {
+            using var command = _dbContext.Database.GetDbConnection().CreateCommand() as NpgsqlCommand;
+            command.CommandText = "SELECT as_get_activities_by_distance_as_json(@Latitud, @Longitud, @LocationRadious,@PageNumber, @PageSize);";
+            command.CommandType = CommandType.Text;
+
+            command.Parameters.AddWithValue("@Latitud", NpgsqlTypes.NpgsqlDbType.Numeric, Latitud);
+            command.Parameters.AddWithValue("@Longitud", NpgsqlTypes.NpgsqlDbType.Numeric, Longitud);
+            command.Parameters.AddWithValue("@LocationRadious", NpgsqlTypes.NpgsqlDbType.Integer, RadiusInMeters);
+            command.Parameters.AddWithValue("@PageNumber", NpgsqlTypes.NpgsqlDbType.Integer, RadiusInMeters);
+            command.Parameters.AddWithValue("@PageSize", NpgsqlTypes.NpgsqlDbType.Integer, PageSize);
+            await _dbContext.Database.OpenConnectionAsync();
+            var Result = await command.ExecuteScalarAsync() as string;
+            Debug.WriteLine(Result);
+            _dbContext.Database.CloseConnection();
+            return Result;
         }
 
         private NpgsqlCommand? GetSqlCommand()

@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Ultra.ActivityStream
 {
+    public interface IPicture
+    {
+        
+    }
     public interface IStreamObject
     {
         Guid Id { get; set; }

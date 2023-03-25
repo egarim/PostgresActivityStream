@@ -3,6 +3,16 @@ using System.Linq;
 
 namespace Ultra.ActivityStream
 {
+    public class Post: StreamObject
+    {
+        
+        public Post()
+        {
+            
+        }
+        public string PostType { get; set; }
+
+    }
     public class StreamObject : IStreamObject
     {
 

@@ -175,7 +175,7 @@ namespace Ultra.ActivityStream
     {
         new Account
         {
-            Id = new Guid("faaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
+            Id = new Guid("89e1755f-d75a-4f5c-913b-a6ff422533b2"),
             ObjectType = "user",
             DisplayName = "Juan Rodriguez",
             Latitude = 18.4897,
@@ -184,7 +184,7 @@ namespace Ultra.ActivityStream
         },
         new Account
         {
-            Id = new Guid("gaaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
+            Id = new Guid("2a055d7c-049c-4ead-984f-f1987c6e4deb"),
             ObjectType = "user",
             DisplayName = "Sofía Fernández",
             Latitude = 18.4816,
@@ -193,7 +193,7 @@ namespace Ultra.ActivityStream
         },
         new Account
         {
-            Id = new Guid("haaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
+            Id = new Guid("95ee691b-2888-4397-8684-450080f09223"),
             ObjectType = "user",
             DisplayName = "Pedro Martínez",
             Latitude = 18.4640,
@@ -202,7 +202,7 @@ namespace Ultra.ActivityStream
         },
         new Account
         {
-            Id = new Guid("iaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
+            Id = new Guid("555596c1-3518-4917-8c89-463aa40c9ba1"),
             ObjectType = "user",
             DisplayName = "Ana Gómez",
             Latitude = 18.4758,
@@ -211,7 +211,7 @@ namespace Ultra.ActivityStream
         },
         new Account
         {
-            Id = new Guid("jaaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
+            Id = new Guid("65347759-d89b-4fa7-b016-46f0c7f29f5a"),
             ObjectType = "user",
             DisplayName = "Luis García",
             Latitude = 18.4876,
@@ -224,54 +224,104 @@ namespace Ultra.ActivityStream
         }
         public static List<Account> CreateAccountsNearSantiago()
         {
-            var accounts = new List<Account>
-    {
-        new Account
-        {
-            Id = new Guid("jaaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
-            ObjectType = "user",
-            DisplayName = "Juan Pérez",
-            Latitude = -33.4625,
-            Longitude = -70.6684,
-            Slug = "juan-perez"
-        },
-        new Account
-        {
-            Id = new Guid("kaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
-            ObjectType = "user",
-            DisplayName = "María González",
-            Latitude = -33.4588,
-            Longitude = -70.6506,
-            Slug = "maria-gonzalez"
-        },
-        new Account
-        {
-            Id = new Guid("laaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
-            ObjectType = "user",
-            DisplayName = "Pedro Rodríguez",
-            Latitude = -33.4714,
-            Longitude = -70.6376,
-            Slug = "pedro-rodriguez"
-        },
-        new Account
-        {
-            Id = new Guid("maaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
-            ObjectType = "user",
-            DisplayName = "Ana Fernández",
-            Latitude = -33.4393,
-            Longitude = -70.6522,
-            Slug = "ana-fernandez"
-        },
-        new Account
-        {
-            Id = new Guid("naaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
-            ObjectType = "user",
-            DisplayName = "Luis Gómez",
-            Latitude = -33.4434,
-            Longitude = -70.6719,
-            Slug = "luis-gomez"
-        }
-    };
+            //        var accounts = new List<Account>
+            //{
+            //    new Account
+            //    {
+            //        Id = new Guid("2d845728-6dff-4020-a841-69c84fdf8dfc"),
+            //        ObjectType = "user",
+            //        DisplayName = "Juan Pérez",
+            //        Latitude = -33.4625,
+            //        Longitude = -70.6684,
+            //        Slug = "juan-perez"
+            //    },
+            //    new Account
+            //    {
+            //        Id = new Guid("6a7a9f3a-79ab-4641-87e3-8c2af4fa2c5a"),
+            //        ObjectType = "user",
+            //        DisplayName = "María González",
+            //        Latitude = -33.4588,
+            //        Longitude = -70.6506,
+            //        Slug = "maria-gonzalez"
+            //    },
+            //    new Account
+            //    {
+            //        Id = new Guid("46b651ff-b95e-4a64-928a-073c2a858f3f"),
+            //        ObjectType = "user",
+            //        DisplayName = "Pedro Rodríguez",
+            //        Latitude = -33.4714,
+            //        Longitude = -70.6376,
+            //        Slug = "pedro-rodriguez"
+            //    },
+            //    new Account
+            //    {
+            //        Id = new Guid("e9652272-3672-4071-972c-6f762277093f"),
+            //        ObjectType = "user",
+            //        DisplayName = "Ana Fernández",
+            //        Latitude = -33.4393,
+            //        Longitude = -70.6522,
+            //        Slug = "ana-fernandez"
+            //    },
+            //    new Account
+            //    {
+            //        Id = new Guid("n38b058d6-e463-46f0-9e62-a0f9a4f44b64"),
+            //        ObjectType = "user",
+            //        DisplayName = "Luis Gómez",
+            //        Latitude = -33.4434,
+            //        Longitude = -70.6719,
+            //        Slug = "luis-gomez"
+            //    }
+            //};
+            var accounts = new List<Account>();
+            accounts.Add(new Account
+            {
+                Id = new Guid("2d845728-6dff-4020-a841-69c84fdf8dfc"),
+                ObjectType = "user",
+                DisplayName = "Juan Pérez",
+                Latitude = -33.4625,
+                Longitude = -70.6684,
+                Slug = "juan-perez"
+            });
+
+            accounts.Add(new Account
+            {
+                Id = new Guid("6a7a9f3a-79ab-4641-87e3-8c2af4fa2c5a"),
+                ObjectType = "user",
+                DisplayName = "María González",
+                Latitude = -33.4588,
+                Longitude = -70.6506,
+                Slug = "maria-gonzalez"
+            });
+
+            accounts.Add(new Account
+            {
+                Id = new Guid("46b651ff-b95e-4a64-928a-073c2a858f3f"),
+                ObjectType = "user",
+                DisplayName = "Pedro Rodríguez",
+                Latitude = -33.4714,
+                Longitude = -70.6376,
+                Slug = "pedro-rodriguez"
+            });
+
+            accounts.Add(new Account
+            {
+                Id = new Guid("e9652272-3672-4071-972c-6f762277093f"),
+                ObjectType = "user",
+                DisplayName = "Ana Fernández",
+                Latitude = -33.4393,
+                Longitude = -70.6522,
+                Slug = "ana-fernandez"
+            });
+
+            accounts.Add(new Account
+            {
+                Id = new Guid("38b058d6-e463-46f0-9e62-a0f9a4f44b64"),
+                ObjectType = "user",
+                DisplayName = "Luis Gómez",
+                Latitude = -33.4434,
+                Longitude = -70.6719,
+                Slug = "luis-gomez"
+            });
 
             return accounts;
         }
@@ -281,7 +331,7 @@ namespace Ultra.ActivityStream
     {
         new Account
         {
-            Id = new Guid("naaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
+            Id = new Guid("c56d1a13-43b9-4519-93f3-c37ba79c8409"),
             ObjectType = "user",
             DisplayName = "Juan López",
             Latitude = -34.6037,
@@ -290,7 +340,7 @@ namespace Ultra.ActivityStream
         },
         new Account
         {
-            Id = new Guid("obaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
+            Id = new Guid("38c227e0-1fda-459c-ace4-c4fd587395b4"),
             ObjectType = "user",
             DisplayName = "María García",
             Latitude = -34.6158,
@@ -299,7 +349,7 @@ namespace Ultra.ActivityStream
         },
         new Account
         {
-            Id = new Guid("pbaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
+            Id = new Guid("e9c34ab5-4934-42a2-b410-a0515de1e864"),
             ObjectType = "user",
             DisplayName = "Pedro Martínez",
             Latitude = -34.5812,
@@ -308,7 +358,7 @@ namespace Ultra.ActivityStream
         },
         new Account
         {
-            Id = new Guid("qbaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
+            Id = new Guid("063c76c8-5fb4-4416-92bd-6658fc42c71b"),
             ObjectType = "user",
             DisplayName = "Ana Rodríguez",
             Latitude = -34.6033,
@@ -317,7 +367,7 @@ namespace Ultra.ActivityStream
         },
         new Account
         {
-            Id = new Guid("rbaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
+            Id = new Guid("5fa08483-b907-4c71-bc22-0054b438ceb3"),
             ObjectType = "user",
             DisplayName = "Luis Fernández",
             Latitude = -34.6345,

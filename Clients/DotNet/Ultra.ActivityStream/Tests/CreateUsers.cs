@@ -1,13 +1,16 @@
 using Newtonsoft.Json;
+using System.Security.Principal;
 using Ultra.ActivityStream;
 
 namespace Tests
 {
-    public class CreateUsers : TestBase
+    public class CreateUserObjects : TestBase
     {
+       
+
         public override string SetConnectionStringName()
         {
-            return nameof(CreateUsers);
+            return nameof(CreateUserObjects);
         }
 
         [SetUp]
@@ -15,28 +18,99 @@ namespace Tests
         {
             return base.Setup();
         }
+        [Test]
+        public async Task Test_as_get_activities_by_distance_as_json()
+        {
+            //TODO test
+           var result=   await this.activityStreamClient.get_activities_by_distance_as_json(59.9343, 30.3351, 1000, 1, 10);
+        }
+        [Test]
+        public async Task CreateUsersNearSanSalvadorAndQueryThem()
+        {
+            const int RadiusDistanceInMeters = 10000;
+            var SanSalvadorAccounts = AccountCreator.CreateAccountsNearSanSalvador();
+            foreach (Account account in SanSalvadorAccounts)
+            {
+                await this.activityStreamClient.ObjectStorageUpsert(account);
+            }
+            var BuenosAiresArgentinaAccounts = AccountCreator.CreateAccountsNearBuenosAires();
+            foreach (Account account in BuenosAiresArgentinaAccounts)
+            {
+                await this.activityStreamClient.ObjectStorageUpsert(account);
+            }
+            var Page1 = await this.activityStreamClient.GetObjectsByCriteriaAsObjects<List<Account>>("user", null, null, null, 1, 5, CityCoordinates.SanSalvadorLocation.Latitude, CityCoordinates.SanSalvadorLocation.Longitude, RadiusDistanceInMeters);
+            
+            
+            
+            foreach (Account account in Page1)
+            {
+                Assert.IsTrue(GeoHelper.IsWithinRadius(CityCoordinates.SanSalvadorLocation.Latitude, CityCoordinates.SanSalvadorLocation.Longitude, account.Latitude, account.Longitude,10000));
+
+            }
+
+
+        }
+
 
         [Test]
         public async Task CreateUsersTest()
         {
-            var SpbAccounts= AccountCreator.CreateAccountsNearStPetersburg();
+            var SpbAccounts = AccountCreator.CreateAccountsNearStPetersburg();
             foreach (Account account in SpbAccounts)
             {
                 await this.activityStreamClient.ObjectStorageUpsert(account);
             }
 
-           await this.activityStreamClient.FollowObject(SpbAccounts.FirstOrDefault().Id, SpbAccounts.LastOrDefault().Id);
-            // // command.CommandText = "SELECT * FROM as_get_objects_by_criteria_as_json('user', '2021-01-01', NULL, NULL, 1, 10, '59.942800,30.307100,10000');";
+            var Objects = await this.activityStreamClient.GetObjectsByCriteriaAsJson("user", null, null, null, 1, 10, null, null, null);
 
-            var Objects=  await this.activityStreamClient.GetObjectsByCriteriaAsJson("user",null,null,null,1,10,null,null,null);
+            var AccountsFromJson = JsonConvert.DeserializeObject<List<Account>>(Objects);
 
-            var AccountsFromJson= JsonConvert.DeserializeObject<List<Account>>(Objects);
+            Assert.AreEqual(5, AccountsFromJson.Count());
+        }
+        /// <summary>
+        /// Create 30 users and the retrive the first 3 pages
+        /// </summary>
+        /// <returns></returns>
+        [Test]
+        public async Task CreateUsers30UsersAndLoadThemByPages()
+        {
+            var SpbAccounts = AccountCreator.CreateAccountsNearStPetersburg();
+            foreach (Account account in SpbAccounts)
+            {
+                await this.activityStreamClient.ObjectStorageUpsert(account);
+            }
+            var GlendaleAccounts = AccountCreator.CreateAccountsNearGlendale();
+            foreach (Account account in GlendaleAccounts)
+            {
+                await this.activityStreamClient.ObjectStorageUpsert(account);
+            }
+            var SantoDomingoAccounts = AccountCreator.CreateAccountsNearSantoDomingo();
+            foreach (Account account in SantoDomingoAccounts)
+            {
+                await this.activityStreamClient.ObjectStorageUpsert(account);
+            }
+            var SanSalvadorAccounts = AccountCreator.CreateAccountsNearSanSalvador();
+            foreach (Account account in SanSalvadorAccounts)
+            {
+                await this.activityStreamClient.ObjectStorageUpsert(account);
+            }
+            var SantiagoDeChileAccounts = AccountCreator.CreateAccountsNearSantiago();
+            foreach (Account account in SantiagoDeChileAccounts)
+            {
+                await this.activityStreamClient.ObjectStorageUpsert(account);
+            }
+            var BuenosAiresArgentinaAccounts = AccountCreator.CreateAccountsNearBuenosAires();
+            foreach (Account account in BuenosAiresArgentinaAccounts)
+            {
+                await this.activityStreamClient.ObjectStorageUpsert(account);
+            }
+            var Page1 = await this.activityStreamClient.GetObjectsByCriteriaAsObjects<List<Account>>("user", null, null, null, 1, 5, null, null, null);
+            var Page2 = await this.activityStreamClient.GetObjectsByCriteriaAsObjects<List<Account>>("user", null, null, null, 2, 5, null, null, null);
+            var Page3 = await this.activityStreamClient.GetObjectsByCriteriaAsObjects<List<Account>>("user", null, null, null, 3, 5, null, null, null);
 
-            var Objects2 = await this.activityStreamClient.GetObjectsByCriteriaAsObjects<List<Account>>("user", null, null, null, 1, 10, null, null, null);
-
-            await this.activityStreamClient.ActivityUpsert("like", SpbAccounts.FirstOrDefault().Id, SpbAccounts.FirstOrDefault().Id,null, 59.942800, 30.307100);
-
-            Assert.Pass();
+            Assert.AreEqual(5, Page1.Count());
+            Assert.AreEqual(5, Page2.Count());
+            Assert.AreEqual(5, Page3.Count());
         }
     }
 }

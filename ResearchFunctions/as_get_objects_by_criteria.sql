@@ -64,7 +64,7 @@ CREATE OR REPLACE FUNCTION as_get_objects_by_criteria2(
     updated_at TIMESTAMP WITH TIME ZONE
 ) AS $$
 DECLARE
-    offset INTEGER := (p_page_number - 1) * p_page_size;
+    voffset INTEGER := (p_page_number - 1) * p_page_size;
     where_clause TEXT;
     object_data_json JSONB;
 BEGIN
@@ -88,7 +88,7 @@ BEGIN
         %s
         ORDER BY created_at DESC, id DESC
         LIMIT %s
-        OFFSET %s', where_clause, p_page_size, offset);
+        OFFSET %s', where_clause, p_page_size, voffset);
 END;
 $$ LANGUAGE plpgsql;
 

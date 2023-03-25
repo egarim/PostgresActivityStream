@@ -89,3 +89,16 @@ FROM get_followees_by_object_id('b8dcbf13-cb01-4a35-93d5-5a5f5a2f6c01', 1, 2);
 --Will retur alice followees as JSON
 SELECT *
 FROM get_followees_by_object_id_as_json('b8dcbf13-cb01-4a35-93d5-5a5f5a2f6c01', 1, 2);
+
+--experimental
+SELECT as_get_objects_by_criteria_query_parameters(
+'object_type1',
+'2022-01-01 00:00:00+00',
+'2022-12-31 23:59:59+00',
+'object_data_column = value1',
+1,
+10,
+'0,0,100',
+ARRAY['7b52a0b8-3d0e-4c2c-9f1b-8ec6f17ed6c9'::uuid, '4b52a0b8-3d0e-4c2c-9f1b-8ec6f17ed6c9'::uuid, '2b52a0b8-3d0e-4c2c-9f1b-8ec6f17ed6c9'::uuid],
+'OR'
+);

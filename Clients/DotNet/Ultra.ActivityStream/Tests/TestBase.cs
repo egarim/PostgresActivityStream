@@ -14,9 +14,9 @@ namespace Tests
 
             ActivityStreamDbContext context = new ActivityStreamDbContext(CnxTemplate.Replace("$DatabaseName", SetConnectionStringName()));
             activityStreamClient = new ActivityStreamClient(context);
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
-            await activityStreamClient.CreateDatabaseObjectsAsync();
+            //context.Database.EnsureDeleted();
+            //context.Database.EnsureCreated();
+            //await activityStreamClient.CreateDatabaseObjectsAsync();
 
 
         }
