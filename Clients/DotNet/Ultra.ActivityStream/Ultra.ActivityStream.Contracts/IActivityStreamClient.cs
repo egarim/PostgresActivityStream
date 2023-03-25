@@ -2,7 +2,11 @@
 
 namespace Ultra.ActivityStream.Contracts
 {
-    public interface IActivityStreamClient : Ultra.ActivityStream.Contracts.Operations.IFollowFromStrings, Ultra.ActivityStream.Contracts.Operations.IFollowFromId, Ultra.ActivityStream.Contracts.Operations.IFollowFromStreamObjects, Ultra.ActivityStream.Contracts.Operations.IUnfollowFromStrings, Ultra.ActivityStream.Contracts.Operations.IUnfollowFromIds, Ultra.ActivityStream.Contracts.Operations.IUnfollowFromStreamObjects, IUpsertActivityFromIds
+    public interface IActivityStreamClient :
+        IFollowFromStrings, IFollowFromId, IFollowFromStreamObjects,
+        IUnfollowFromStrings, IUnfollowFromIds, IUnfollowFromStreamObjects,
+        IUpsertObjectFromStreamObject,
+        IUpsertActivityFromIds
     {
      
         Task CreateDatabaseObjectsAsync();
@@ -15,7 +19,7 @@ namespace Ultra.ActivityStream.Contracts
         Task<T> GetObjectsByCriteriaAsObjects<T>(string ObjectType, DateTime? CreatedAt, DateTime? UpdatedAt, int PageNumber, int PageSize);
         Task<T> GetObjectsByCriteriaAsObjects<T>(string ObjectType, DateTime? CreatedAt, DateTime? UpdatedAt, string? ObjectDataWhere, int PageNumber, int PageSize);
         Task<T> GetObjectsByCriteriaAsObjects<T>(string ObjectType, DateTime? CreatedAt, DateTime? UpdatedAt, string? ObjectDataWhere, int PageNumber, int PageSize, double? Latitud, double? Longitud, int? RadiusInMeters);
-        Task ObjectStorageUpsert(object Instace);
+       
         Task SimpleTest();
 
 

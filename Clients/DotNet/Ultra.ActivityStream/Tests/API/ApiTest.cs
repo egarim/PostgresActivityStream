@@ -42,7 +42,7 @@ namespace Tests.API
             files.Add(GenerateRandomStream(200));
             files.Add(GenerateRandomStream(300));
 
-            await activityStreamClient.UploadFilesAsync(new StreamObject(),
+            await activityStreamClient.CreateActivity(new StreamObject(),
                 new StreamObject(), new StreamObject(), 0, 0, files);
         }
     }

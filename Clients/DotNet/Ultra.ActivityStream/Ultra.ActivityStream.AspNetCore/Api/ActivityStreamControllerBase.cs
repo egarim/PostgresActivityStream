@@ -56,6 +56,12 @@ namespace Ultra.ActivityStream.AspNetCore.Api
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+       
+        public virtual async Task<IActionResult> CreateObject([FromForm(Name = "Obj")] string Obj)
+        {
+            return Ok();
+            //return base.CreateActivity(actor, obj, target, latitude, longitude);
+        }
     }
 
 }
