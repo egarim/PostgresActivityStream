@@ -22,6 +22,7 @@ namespace Tests.API
         public async Task Test1()
         {
             var AppClient = HttpClientFactory.CreateClient("AppClient");
+            var Response= await AppClient.GetAsync("simple");
             ActivityStreamClient activityStreamClient = new ActivityStreamClient(AppClient);
             activityStreamClient.UploadFilesAsync(new Ultra.ActivityStream.Contracts.StreamObject(),
                 new Ultra.ActivityStream.Contracts.StreamObject(), new Ultra.ActivityStream.Contracts.StreamObject(), 0, 0, new List<Stream>());
