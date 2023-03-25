@@ -8,7 +8,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Ultra.ActivityStream
 {
-    public class ActivityStreamClient
+    public class ActivityStreamClient : IActivityStreamClient
     {
         private readonly ActivityStreamDbContext _dbContext;
 
