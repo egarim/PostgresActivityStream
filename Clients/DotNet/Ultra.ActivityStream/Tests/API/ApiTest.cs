@@ -46,7 +46,7 @@ namespace Tests.API
             //    new StreamObject(), new StreamObject(), 0, 0, files);
 
             await activityStreamClient.FollowObjectFromIdsAsync(Guid.NewGuid(),Guid.NewGuid());
-            await activityStreamClient.UnfollowFromIdsAsync(Guid.NewGuid(), Guid.NewGuid());
+            await activityStreamClient.UnfollowObjectFromIdsAsync(Guid.NewGuid(), Guid.NewGuid());
         }
     }
 }

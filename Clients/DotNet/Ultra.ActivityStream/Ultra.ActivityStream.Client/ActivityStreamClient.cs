@@ -6,7 +6,7 @@ using Ultra.ActivityStream.Contracts.Operations;
 
 namespace Ultra.ActivityStream.Client
 {
-    public class ActivityStreamClient: IFollowObjectFromIds,IUnfollowFromIds
+    public class ActivityStreamClient: IFollowObjectFromIds,IUnfollowObjectFromIds
     {
         private readonly HttpClient _httpClient;
 
@@ -119,7 +119,7 @@ namespace Ultra.ActivityStream.Client
             }
         }
 
-        public async Task UnfollowFromIdsAsync(Guid Follower, Guid Followee)
+        public async Task UnfollowObjectFromIdsAsync(Guid Follower, Guid Followee)
         {
             using (var content = new MultipartFormDataContent())
             {

@@ -68,13 +68,13 @@ namespace Ultra.ActivityStream
 
         public async Task UnFollowObject(Ultra.ActivityStream.Contracts.IStreamObject Follower, Ultra.ActivityStream.Contracts.IStreamObject Followee)
         {
-            await UnfollowFromIdsAsync(Follower.Id, Followee.Id);
+            await UnfollowObjectFromIdsAsync(Follower.Id, Followee.Id);
         }
-        public async Task UnFollowObject(string Follower, string Followee)
+        public async Task UnFollowObjectFromStringsAsync(string Follower, string Followee)
         {
-            await UnfollowFromIdsAsync(Guid.Parse(Follower), Guid.Parse(Followee));
+            await UnfollowObjectFromIdsAsync(Guid.Parse(Follower), Guid.Parse(Followee));
         }
-        public async Task UnfollowFromIdsAsync(Guid Follower, Guid Followee)
+        public async Task UnfollowObjectFromIdsAsync(Guid Follower, Guid Followee)
         {
 
             using var command = _dbContext.Database.GetDbConnection().CreateCommand() as NpgsqlCommand;
