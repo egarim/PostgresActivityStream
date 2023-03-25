@@ -73,13 +73,14 @@ namespace Tests.Controllers
         {
 
         }
-        [HttpPost("upload")]
+        [HttpPost("CreateActivity")]
         public new Task<IActionResult> CreateActivity([FromForm(Name = "Actor")] string actor, [FromForm(Name = "Object")] string obj, [FromForm(Name = "Target")] string target, [FromForm(Name = "Latitude")] double latitude, [FromForm(Name = "Longitude")] double longitude)
         {
-            var actorNew = new StreamObject();
-            var objNew = new StreamObject();
-            var targetNew = new StreamObject();
-            return base.CreateActivity(actorNew, objNew, targetNew, latitude, longitude);
+         
+
+            return base.CreateActivity(actor, obj, target, latitude, longitude);
+
+            
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tests.Infrastructure;
 using Ultra.ActivityStream.Client;
-
+using Ultra.ActivityStream.Contracts;
 namespace Tests.API
 {
     public class ApiTest : MultiServerBaseTest
@@ -17,15 +17,33 @@ namespace Tests.API
             HttpClientFactory=this.GetTestClientFactory();
         }
         TestClientFactory HttpClientFactory;
+        public static Stream GenerateRandomStream(int length)
+        {
+            var stream = new MemoryStream();
 
+            var buffer = new byte[length];
+            new Random().NextBytes(buffer);
+
+            stream.Write(buffer, 0, buffer.Length);
+            stream.Seek(0, SeekOrigin.Begin);
+
+            return stream;
+        }
         [Test]
         public async Task Test1()
         {
             var AppClient = HttpClientFactory.CreateClient("AppClient");
            
+
+
             ActivityStreamClient activityStreamClient = new ActivityStreamClient(AppClient);
-            await activityStreamClient.UploadFilesAsync(new Ultra.ActivityStream.Contracts.StreamObject(),
-                new Ultra.ActivityStream.Contracts.StreamObject(), new Ultra.ActivityStream.Contracts.StreamObject(), 0, 0, new List<Stream>());
+            List<Stream> files = new List<Stream>();
+            files.Add(GenerateRandomStream(100));
+            files.Add(GenerateRandomStream(200));
+            files.Add(GenerateRandomStream(300));
+
+            await activityStreamClient.UploadFilesAsync(new StreamObject(),
+                new StreamObject(), new StreamObject(), 0, 0, files);
         }
     }
 }

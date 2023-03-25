@@ -19,11 +19,11 @@ namespace Ultra.ActivityStream.AspNetCore.Api
             _logger = logger;
         }
 
-        [HttpPost("upload1")]
+        //[HttpPost("CreateActivity")] //this attribute should be set in the child class
         public virtual async Task<IActionResult> CreateActivity(
-            [FromForm(Name = "Actor")] StreamObject actor,
-            [FromForm(Name = "Object")] StreamObject obj,
-            [FromForm(Name = "Target")] StreamObject target,
+            [FromForm(Name = "Actor")] string actor,
+            [FromForm(Name = "Object")] string obj,
+            [FromForm(Name = "Target")] string target,
             [FromForm(Name = "Latitude")] double latitude,
             [FromForm(Name = "Longitude")] double longitude)
         {

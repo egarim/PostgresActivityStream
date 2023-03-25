@@ -14,18 +14,7 @@ namespace Ultra.ActivityStream.Client
             _httpClient = httpClient;
             //_httpClient.BaseAddress = new Uri("https://example.com/"); // replace with the actual base address of your API
         }
-        public static Stream GenerateRandomStream(int length)
-        {
-            var stream = new MemoryStream();
-
-            var buffer = new byte[length];
-            new Random().NextBytes(buffer);
-
-            stream.Write(buffer, 0, buffer.Length);
-            stream.Seek(0, SeekOrigin.Begin);
-
-            return stream;
-        }
+        
         public async Task UploadFilesAsync(StreamObject actor, StreamObject obj, StreamObject target, double latitude, double longitude, List<Stream> files)
         {
             using (var content = new MultipartFormDataContent())
@@ -37,12 +26,12 @@ namespace Ultra.ActivityStream.Client
                 content.Add(new StringContent(latitude.ToString()), "Latitude");
                 content.Add(new StringContent(longitude.ToString()), "Longitude");
 
-                files.Add(null);
+              
                 // Add the files as binary data
                 foreach (var file in files)
                 {
-                    //var fileContent = new StreamContent(file);
-                    var fileContent = new StreamContent(GenerateRandomStream(100));
+                    var fileContent = new StreamContent(file);
+                   
                     fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
                     {
                         Name = "files",
@@ -51,11 +40,10 @@ namespace Ultra.ActivityStream.Client
                     content.Add(fileContent);
                 }
 
-                //var GetResponse= await _httpClient.GetAsync("simple/get");
-                //GetResponse.EnsureSuccessStatusCode(); 
+             
                 try
                 {
-                    var response = await _httpClient.PostAsync("ActivityStream/upload", content);
+                    var response = await _httpClient.PostAsync("ActivityStream/CreateActivity", content);
                     //var response = await _httpClient.PostAsync("activityStream/upload", content);
                     response.EnsureSuccessStatusCode();
                 }
