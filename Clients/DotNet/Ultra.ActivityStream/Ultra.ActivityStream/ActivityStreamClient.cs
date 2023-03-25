@@ -40,11 +40,11 @@ namespace Ultra.ActivityStream
 
         #region FollowObject Overloads
 
-        public async Task FollowObject(string Follower, string Followee)
+        public async Task FollowObjectFromStringsAsync(string Follower, string Followee)
         {
             await FollowObjectFromIdsAsync(Guid.Parse(Follower), Guid.Parse(Followee));
         }
-        public async Task FollowObject(Ultra.ActivityStream.Contracts.IStreamObject Follower, Ultra.ActivityStream.Contracts.IStreamObject Followee)
+        public async Task FollowObjectFromStreamObjectsAsync(Ultra.ActivityStream.Contracts.IStreamObject Follower, Ultra.ActivityStream.Contracts.IStreamObject Followee)
         {
             await FollowObjectFromIdsAsync(Follower.Id, Followee.Id);
         }

@@ -2,6 +2,6 @@
 {
     public interface IFollowObjectFromStrings
     {
-        Task FollowObject(string Follower, string Followee);
+        Task FollowObjectFromStringsAsync(string Follower, string Followee);
     }
 }
