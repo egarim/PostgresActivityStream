@@ -4,11 +4,11 @@ using Ultra.ActivityStream.Contracts;
 
 namespace Ultra.ActivityStream.Client
 {
-    public class ApiClient
+    public class ActivtyStreamClient
     {
         private readonly HttpClient _httpClient;
 
-        public ApiClient(HttpClient httpClient)
+        public ActivtyStreamClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri("https://example.com/"); // replace with the actual base address of your API

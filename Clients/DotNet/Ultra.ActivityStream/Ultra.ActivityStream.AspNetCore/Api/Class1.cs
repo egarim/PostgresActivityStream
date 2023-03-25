@@ -8,19 +8,19 @@ using Ultra.ActivityStream.Contracts;
 
 namespace Ultra.ActivityStream.AspNetCore.Api
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class FilesController : ControllerBase
+    //[ApiController]
+    //[Route("[controller]")]
+    public abstract class ActivityStreamControllerBase : ControllerBase
     {
-        private readonly ILogger<FilesController> _logger;
+        private readonly ILogger<ActivityStreamControllerBase> _logger;
 
-        public FilesController(ILogger<FilesController> logger)
+        public ActivityStreamControllerBase(ILogger<ActivityStreamControllerBase> logger)
         {
             _logger = logger;
         }
 
         [HttpPost("upload")]
-        public async Task<IActionResult> Upload(
+        public virtual async Task<IActionResult> CreateActivity(
             [FromForm(Name = "Actor")] StreamObject actor,
             [FromForm(Name = "Object")] StreamObject obj,
             [FromForm(Name = "Target")] StreamObject target,

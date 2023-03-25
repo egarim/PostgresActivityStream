@@ -26,6 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Ultra.ActivityStream.AspNetCore\Ultra.ActivityStream.AspNetCore.csproj" />
+    <ProjectReference Include="..\Ultra.ActivityStream.Client\Ultra.ActivityStream.Client.csproj" />
     <ProjectReference Include="..\Ultra.ActivityStream.Contracts\Ultra.ActivityStream.Contracts.csproj" />
     <ProjectReference Include="..\Ultra.ActivityStream\Ultra.ActivityStream.csproj" />
   </ItemGroup>
