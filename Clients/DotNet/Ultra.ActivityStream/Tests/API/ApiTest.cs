@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tests.Infrastructure;
+using Ultra.ActivityStream.Client;
 
 namespace Tests.API
 {
@@ -13,11 +14,17 @@ namespace Tests.API
         public override void Setup()
         {
             base.Setup();
+            HttpClientFactory=this.GetTestClientFactory();
         }
         TestClientFactory HttpClientFactory;
-        void Test1()
+
+        [Test]
+        public async Task Test1()
         {
             var AppClient = HttpClientFactory.CreateClient("AppClient");
+            ActivityStreamClient activityStreamClient = new ActivityStreamClient(AppClient);
+            activityStreamClient.UploadFilesAsync(new Ultra.ActivityStream.Contracts.StreamObject(),
+                new Ultra.ActivityStream.Contracts.StreamObject(), new Ultra.ActivityStream.Contracts.StreamObject(), 0, 0, new List<Stream>());
         }
     }
 }

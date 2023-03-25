@@ -4,14 +4,14 @@ using Ultra.ActivityStream.Contracts;
 
 namespace Ultra.ActivityStream.Client
 {
-    public class ActivtyStreamClient
+    public class ActivityStreamClient
     {
         private readonly HttpClient _httpClient;
 
-        public ActivtyStreamClient(HttpClient httpClient)
+        public ActivityStreamClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("https://example.com/"); // replace with the actual base address of your API
+            //_httpClient.BaseAddress = new Uri("https://example.com/"); // replace with the actual base address of your API
         }
 
         public async Task UploadFilesAsync(StreamObject actor, StreamObject obj, StreamObject target, double latitude, double longitude, List<Stream> files)
@@ -37,7 +37,7 @@ namespace Ultra.ActivityStream.Client
                     content.Add(fileContent);
                 }
 
-                var response = await _httpClient.PostAsync("files/upload", content);
+                var response = await _httpClient.PostAsync("ActivityStream/upload", content);
                 response.EnsureSuccessStatusCode();
             }
         }

@@ -16,7 +16,7 @@ namespace Tests.API
         {
 
         }
-
+        [HttpPost("upload")]
         public override Task<IActionResult> CreateActivity([FromForm(Name = "Actor")] StreamObject actor, [FromForm(Name = "Object")] StreamObject obj, [FromForm(Name = "Target")] StreamObject target, [FromForm(Name = "Latitude")] double latitude, [FromForm(Name = "Longitude")] double longitude)
         {
             return base.CreateActivity(actor, obj, target, latitude, longitude);
