@@ -4,12 +4,13 @@ using System.Data;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text.Json;
+using Ultra.ActivityStream.Contracts;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Ultra.ActivityStream
 {
     public class ActivityStreamClient : IActivityStreamClient
-    {
+    {   
         private readonly ActivityStreamDbContext _dbContext;
 
         public ActivityStreamClient(ActivityStreamDbContext dbContext)

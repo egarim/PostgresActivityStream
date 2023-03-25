@@ -1,6 +1,6 @@
 using Ultra.ActivityStream;
 
-namespace Tests
+namespace Tests.Infrastructure
 {
     public abstract class TestBase
     {

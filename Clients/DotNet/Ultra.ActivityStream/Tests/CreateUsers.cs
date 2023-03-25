@@ -4,7 +4,7 @@ using Ultra.ActivityStream;
 
 namespace Tests
 {
-    public class CreateUserObjects : TestBase
+    public class CreateUserObjects : Tests.Infrastructure.TestBase
     {
        
 
@@ -44,7 +44,7 @@ namespace Tests
             
             foreach (Ultra.ActivityStream.Contracts.Account account in Page1)
             {
-                Assert.IsTrue(GeoHelper.IsWithinRadius(CityCoordinates.SanSalvadorLocation.Latitude, CityCoordinates.SanSalvadorLocation.Longitude, account.Latitude, account.Longitude,10000));
+                Assert.IsTrue(Ultra.ActivityStream.Contracts.GeoHelper.IsWithinRadius(CityCoordinates.SanSalvadorLocation.Latitude, CityCoordinates.SanSalvadorLocation.Longitude, account.Latitude, account.Longitude,10000));
 
             }
 

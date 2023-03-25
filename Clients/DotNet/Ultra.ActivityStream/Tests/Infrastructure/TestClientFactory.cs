@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 
-namespace Tests
+namespace Tests.Infrastructure
 {
     public class TestClientFactory : IHttpClientFactory
     {

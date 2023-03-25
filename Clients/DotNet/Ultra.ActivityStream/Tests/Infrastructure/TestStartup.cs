@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 
-namespace Tests
+namespace Tests.Infrastructure
 {
     public class TestStartup
     {

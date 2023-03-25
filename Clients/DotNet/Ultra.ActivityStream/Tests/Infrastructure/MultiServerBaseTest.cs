@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-namespace Tests
+namespace Tests.Infrastructure
 {
     public class MultiServerBaseTest
     {
@@ -17,7 +17,7 @@ namespace Tests
 
         }
 
-        public TestClientFactory GetTestClientFactory()
+        public Tests.Infrastructure.TestClientFactory GetTestClientFactory()
         {
             Microsoft.AspNetCore.TestHost.TestServer _testServer;
             var hostBuilder = new WebHostBuilder();
@@ -28,7 +28,7 @@ namespace Tests
 
 
             hostBuilder.UseConfiguration(Configuration);
-            hostBuilder.UseStartup<TestStartup>();
+            hostBuilder.UseStartup<Tests.Infrastructure.TestStartup>();
             _testServer = new Microsoft.AspNetCore.TestHost.TestServer(hostBuilder);
             hostBuilder.ConfigureLogging(logging =>
             {
@@ -39,7 +39,7 @@ namespace Tests
 
             });
 
-            var testServerHttpClientFactory = new TestClientFactory(_testServer);
+            var testServerHttpClientFactory = new Tests.Infrastructure.TestClientFactory(_testServer);
             return testServerHttpClientFactory;
         }
 
