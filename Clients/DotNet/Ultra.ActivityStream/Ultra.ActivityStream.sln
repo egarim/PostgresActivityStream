@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ultra.ActivityStream.Contracts", "Ultra.ActivityStream.Contracts\Ultra.ActivityStream.Contracts.csproj", "{DCA3D104-CE1E-4CB1-86F8-F61620C2700B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ultra.ActivityStream.AspNetCore", "Ultra.ActivityStream.AspNetCore\Ultra.ActivityStream.AspNetCore.csproj", "{7CB875B7-4092-4B45-A638-7D95D19A9AC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ultra.ActivityStream.AspNetCore", "Ultra.ActivityStream.AspNetCore\Ultra.ActivityStream.AspNetCore.csproj", "{7CB875B7-4092-4B45-A638-7D95D19A9AC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ultra.ActivityStream.Client", "Ultra.ActivityStream.Client\Ultra.ActivityStream.Client.csproj", "{0F7EC83F-D2EA-4D54-8B82-4359AFF8274F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ultra.ActivityStream.Client", "Ultra.ActivityStream.Client\Ultra.ActivityStream.Client.csproj", "{0F7EC83F-D2EA-4D54-8B82-4359AFF8274F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ultra.ActivityStream.S3FileStorage", "Ultra.ActivityStream.S3FileStorage\Ultra.ActivityStream.S3FileStorage.csproj", "{4F7505D9-3D5E-4305-89A7-245529FFBBEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{0F7EC83F-D2EA-4D54-8B82-4359AFF8274F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F7EC83F-D2EA-4D54-8B82-4359AFF8274F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F7EC83F-D2EA-4D54-8B82-4359AFF8274F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F7505D9-3D5E-4305-89A7-245529FFBBEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F7505D9-3D5E-4305-89A7-245529FFBBEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F7505D9-3D5E-4305-89A7-245529FFBBEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F7505D9-3D5E-4305-89A7-245529FFBBEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
