@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Runtime.InteropServices;
-
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Xml.Linq;
 using Ultra.ActivityStream.Contracts;
 
@@ -56,9 +57,29 @@ namespace Ultra.ActivityStream.AspNetCore.Api
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-       
-        public virtual async Task<IActionResult> CreateObject([FromForm(Name = "Obj")] string Obj)
+
+        [HttpPost("CreateObject")]
+        public virtual async Task<IActionResult> CreateObject([FromForm(Name = "JsonObject")] string Obj, [FromForm(Name = "Files")] string Files)
         {
+
+            var Asf=  JsonSerializer.Deserialize<List<FileActivityStream>>(Files);
+            var files = new List<string>();
+            var test = Obj;
+
+            foreach (var formFile in Request.Form.Files)
+            {
+                if (formFile.Length > 0)
+                {
+                    var filePath = Path.GetTempFileName();
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await formFile.CopyToAsync(stream);
+                    }
+
+                    files.Add(filePath);
+                }
+            }
             return Ok();
             //return base.CreateActivity(actor, obj, target, latitude, longitude);
         }

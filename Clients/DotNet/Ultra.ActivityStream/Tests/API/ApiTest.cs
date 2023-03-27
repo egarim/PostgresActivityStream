@@ -45,8 +45,16 @@ namespace Tests.API
             //await activityStreamClient.CreateActivity(new StreamObject(),
             //    new StreamObject(), new StreamObject(), 0, 0, files);
 
-            await activityStreamClient.FollowObjectFromIdsAsync(Guid.NewGuid(),Guid.NewGuid());
-            await activityStreamClient.UnfollowObjectFromIdsAsync(Guid.NewGuid(), Guid.NewGuid());
+            Dictionary<FileActivityStream, Stream> NewFiles = new Dictionary<FileActivityStream, Stream>();
+
+            foreach (Stream stream in files)
+            {
+                NewFiles.Add(new FileActivityStream() { Id=Guid.NewGuid() }, stream);
+            }
+            await activityStreamClient.CreateObject(new StreamObject() { DisplayName="Test1" }, NewFiles);
+
+            //await activityStreamClient.FollowObjectFromIdsAsync(Guid.NewGuid(),Guid.NewGuid());
+            //await activityStreamClient.UnfollowObjectFromIdsAsync(Guid.NewGuid(), Guid.NewGuid());
         }
     }
 }
