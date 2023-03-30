@@ -153,7 +153,7 @@ namespace Ultra.ActivityStream.Client
 
                 try
                 {
-                    var response = await _httpClient.PostAsync("ActivityStream/FollowObjectFromIdsAsync", content);
+                    var response = await _httpClient.PostAsync("ActivityStream/FollowObjectsFromIdAsync", content);
                     response.EnsureSuccessStatusCode();
                 }
                 catch (Exception ex)

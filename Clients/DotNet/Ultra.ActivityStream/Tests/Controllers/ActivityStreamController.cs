@@ -38,7 +38,7 @@ namespace Tests.Controllers
         //    return base.CreateObject(Obj, Files);
         //}
 
-        [HttpPost("FollowObjectFromIdAsync")]
+        [HttpPost("FollowObjectsFromIdAsync")]
         public virtual async Task<IActionResult> FollowObjectFromIdAsync([FromForm(Name = "Follower")] string Follower, [FromForm(Name = "Followee")] Guid Followee)
         {
             return Ok();
