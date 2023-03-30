@@ -53,8 +53,8 @@ namespace Tests.API
             }
             await activityStreamClient.CreateObject(new StreamObject() { DisplayName="Test1" }, NewFiles);
 
-            //await activityStreamClient.FollowObjectFromIdsAsync(Guid.NewGuid(),Guid.NewGuid());
-            //await activityStreamClient.UnfollowObjectFromIdsAsync(Guid.NewGuid(), Guid.NewGuid());
+            await activityStreamClient.FollowObjectFromIdsAsync(Guid.NewGuid(),Guid.NewGuid());
+            await activityStreamClient.UnfollowObjectFromIdsAsync(Guid.NewGuid(), Guid.NewGuid());
         }
     }
 }
